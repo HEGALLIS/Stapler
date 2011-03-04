@@ -25,7 +25,25 @@ img {
     return window.localStorage.customMailtoUrl;
   }
 
+  function post_to_url(path, params) {
+    var form = document.createElement("form");
+    form.setAttribute("method","post");
+    form.setAttribute("action",path);
+    for(key in params) {
+      var input = document.createElement("input");
+      input.setAttribute("type", "hidden");
+      input.setAttribute("name", key);
+      input.setAttribute("value", params[key]);
+      form.appendChild(input);
+    }
+    form.submit();
+  }
+
   function executeMailto(email, tab_id, subject, body, selection) {
+    post_to_url("http://appscripts.appspot.com/mail", {subject: subject, content:body, address:email});
+  }
+
+  function x_executeMailto(email, tab_id, subject, body, selection) {
     var default_handler = customMailtoUrl().length == 0;
 
 	// suck, MS outlook and gmail has different syntax
@@ -85,7 +103,7 @@ img {
     if (tab.url.indexOf("http:") != 0 &&
 	
         tab.url.indexOf("https:") != 0) {
-      executeMailto(emailAdd,tab.id, "", tab.url, "");
+      executeMailto(emailAdd,tab.id, "instpaper", tab.url, "");
     } else {
       chrome.tabs.executeScript(null, {file: "content_script.js"});
     }
@@ -98,7 +116,7 @@ img {
 		chrome.tabs.getSelected(w.id,function (tab){
 			if (tab.url.indexOf("http:") != 0 &&
 			tab.url.indexOf("https:") != 0) {
-			executeMailto(emailAdd, tab.id, "", tab.url, "");
+			executeMailto(emailAdd, tab.id, "instapaper", tab.url, "");
 			} else {
 			chrome.tabs.executeScript(null, {file: "content_script.js"});
 			}    
