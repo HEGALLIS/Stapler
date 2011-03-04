@@ -1,0 +1,16 @@
+{
+  "name": "instapaper",
+  "description": "This extension adds a staper button to the toolbar which allows you to email the page link using your default mail client or Gmail.",
+  "version": "0.1",
+//  "background_page": "background.html",
+  "icons": { "128": "stapler.jpg" },
+  "options_page": "options.html",
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
+  "browser_action": {
+    "default_title": "Staper this page",
+    "default_icon": "stapler.jpg",
+    "popup": "popup.html"
+  }
+}
